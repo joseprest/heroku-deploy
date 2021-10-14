@@ -41,7 +41,17 @@ const addRemote = ({
   }
 };
 
-const addConfig = ({ app_name, env_file, appdir }) => {
+const addConfig = ({ app_name, env_file, appdir, buildpacks }) => {
+  // buildpacks
+  buildpacks.split(" ").forEach((_buildpack, index) => {
+    if (_buildpack) {
+      execSync(
+        `heroku buildpacks:add --index --app=${app_name} --index=${index} ${_buildpack}`
+      );
+    }
+  });
+
+  //
   let configVars = [];
   for (let key in process.env) {
     if (key.startsWith("HD_")) {
@@ -144,6 +154,7 @@ let heroku = {
   email: core.getInput("heroku_email"),
   app_name: core.getInput("heroku_app_name"),
   buildpack: core.getInput("buildpack"),
+  buildpacks: core.getInput("buildpacks"),
   branch: core.getInput("branch"),
   dontuseforce: core.getInput("dontuseforce") === "false" ? false : true,
   dontautocreate: core.getInput("dontautocreate") === "false" ? false : true,

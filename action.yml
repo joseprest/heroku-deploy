@@ -16,6 +16,9 @@ inputs:
   buildpack:
     description: "An optional buildpack to use when creating the heroku application"
     required: false
+  buildpacks:
+    description: "An optional buildpacks to use when creating the heroku application"
+    required: false
   branch:
     description: "The branch that you would like to deploy to Heroku"
     default: "HEAD"

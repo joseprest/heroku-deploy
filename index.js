@@ -16,7 +16,14 @@ machine git.heroku.com
     password ${api_key}
 EOF`;
 
-const addRemote = ({ app_name, dontautocreate, buildpack, region, team, stack }) => {
+const addRemote = ({
+  app_name,
+  dontautocreate,
+  buildpack,
+  region,
+  team,
+  stack,
+}) => {
   try {
     execSync("heroku git:remote --app " + app_name);
     console.log("Added git remote heroku");
@@ -71,6 +78,7 @@ const deploy = ({
   dockerHerokuProcessType,
   dockerBuildArgs,
   appdir,
+  push_args,
 }) => {
   const force = !dontuseforce ? "--force" : "";
   if (usedocker) {
@@ -95,12 +103,15 @@ const deploy = ({
     }
 
     if (appdir === "") {
-      execSync(`git push heroku ${branch}:refs/heads/main ${force}`, {
-        maxBuffer: 104857600,
-      });
+      execSync(
+        `git push heroku ${branch}:refs/heads/main ${force} ${push_args}`,
+        {
+          maxBuffer: 104857600,
+        }
+      );
     } else {
       execSync(
-        `git push ${force} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/main`,
+        `git push ${force} ${push_args} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/main`,
         { maxBuffer: 104857600 }
       );
     }
@@ -151,6 +162,7 @@ let heroku = {
   region: core.getInput("region"),
   stack: core.getInput("stack"),
   team: core.getInput("team"),
+  push_args: core.getInput("push_args"),
 };
 
 // Formatting

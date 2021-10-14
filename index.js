@@ -46,7 +46,7 @@ const addConfig = ({ app_name, env_file, appdir, buildpacks }) => {
   buildpacks.split(" ").forEach((_buildpack, index) => {
     if (_buildpack) {
       execSync(
-        `heroku buildpacks:add --app=${app_name} --index=${
+        `heroku buildpacks:set --app=${app_name} --index=${
           index + 1
         } ${_buildpack}`
       );

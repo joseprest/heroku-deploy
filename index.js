@@ -43,6 +43,8 @@ const addRemote = ({
 
 const addConfig = ({ app_name, env_file, appdir, buildpacks }) => {
   // buildpacks
+  execSync(`heroku buildpacks:clear`);
+
   buildpacks.split(" ").forEach((_buildpack, index) => {
     if (_buildpack) {
       execSync(

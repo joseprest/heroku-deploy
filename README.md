@@ -101,7 +101,8 @@ The action comes with additional options that you can use to configure your proj
 | region                      | false    | The region in which you would like to deploy a server                                                                                                                                               | eu or dublin                                          |
 | stack                       | false    | Set stack of your heroku app if you need to change. Default: heroku-20                                                                                                                              | container                                             |
 | team                        | false    | If deploying to an organization, then specify the name of the team or organization here                                                                                                             | team-xyz                                              |
-| push_args                   | false    | when git push,  additional parameter (--no-verify)                                                                                                                                                  | --no-verify                                           |
+| push_args                   | false    | when git push, additional parameter (--no-verify)                                                                                                                                                   | --no-verify                                           |
+| cleardb                     | false    | clear DB connection                                                                                                                                                                                 | false                                                 |
 
 ## Examples
 

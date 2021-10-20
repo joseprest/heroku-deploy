@@ -41,7 +41,7 @@ const addRemote = ({
   }
 };
 
-const addConfig = ({ app_name, env_file, appdir, buildpacks }) => {
+const addConfig = ({ app_name, env_file, appdir, buildpacks, cleardb }) => {
   // buildpacks
   execSync(`heroku buildpacks:clear`);
 
@@ -73,6 +73,14 @@ const addConfig = ({ app_name, env_file, appdir, buildpacks }) => {
   }
   if (configVars.length !== 0) {
     execSync(`heroku config:set --app=${app_name} ${configVars.join(" ")}`);
+  }
+
+  if (cleardb) {
+    // cleardb
+    execSync(`heroku addons:create cleardb:ignite --app=${app_name}`);
+    execSync(
+      `cleardb=($(heroku config | grep CLEARDB)); heroku config:set --app=${app_name} DATABASE_URL=\${cleardb[1]}`
+    );
   }
 };
 

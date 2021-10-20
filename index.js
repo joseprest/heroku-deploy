@@ -219,6 +219,7 @@ if (heroku.dockerBuildArgs) {
       return;
     }
     //ssh key for github
+    execSync(`ssh-keygen -R github.com`);
     execSync(`ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts`);
     console.log("Created and wrote to ~/.ssh");
 
